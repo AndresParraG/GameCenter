@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">GameCenter</string>
+    <string name="game_center_app">Game Center App</string>
+    <string name="_2048_game">2048 Game</string>
+    <string name="peg_solitaire">Peg Solitaire</string>
+    <string name="_2048_game_and_peg_solitaire">2048 Game and Peg Solitaire</string>
+    <string name="pre_build_version">Pre-build version</string>
+    <string name="null_value"> </string>
+    <string name="start">Start</string>
+    <string name="empty">empty</string>
+    <string name="peg">peg</string>
+    <string name="restart">restart</string>
+    <string name="moves">Moves:</string>
+    <string name="_0">0</string>
+    <string name="pegs_left">Pegs Left:</string>
+    <string name="_32">32</string>
+    <string name="menu">MENU</string>
+</resources>

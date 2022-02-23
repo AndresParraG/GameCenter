@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".SplashActivity">
+
+    <TextView
+        android:id="@+id/logoTop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/game_center_app"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        android:textSize="40sp"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:gravity="top|center"/>
+
+
+    <TableLayout
+        android:id="@+id/table_layout"
+        android:stretchColumns="*"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TableRow
+            android:id="@+id/row_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|center_horizontal">
+
+            <ImageView
+                android:id="@+id/img_2048"
+                android:layout_width="60dp"
+                android:layout_height="500dp"
+                android:layout_marginStart="8dp"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:contentDescription="@string/_2048_game"
+                android:src="@drawable/game_2048_img" />
+
+            <ImageView
+                android:id="@+id/img_peg"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:contentDescription="@string/peg_solitaire"
+                android:src="@drawable/peg_solitaire_img" />
+        </TableRow>
+
+    </TableLayout>
+
+    <TextView
+        android:id="@+id/logoBot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="italic"
+        android:textSize="25sp"
+        android:text="@string/_2048_game_and_peg_solitaire"
+        android:gravity="center" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/pre_build_version"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:gravity="center"/>
+
+</LinearLayout>
