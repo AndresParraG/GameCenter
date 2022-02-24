@@ -3,6 +3,7 @@ package com.example.gamecenter;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -15,14 +16,22 @@ public class PegDisplay extends AppCompatActivity {
     private TextView pegsCounter;
     private Button undoButton;
 
+    private static final String TAG = "PegDisplay";
+    private static final String BOARD = "index";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_peg_display);
 
-        peg = new PegGame();
+        if (savedInstanceState != null) {
+            peg = (PegGame) savedInstanceState.getSerializable(BOARD);
+        } else {
+            peg = new PegGame();
+        }
         pegsCounter = (TextView) findViewById(R.id.pegsCounter);
         undoButton = findViewById(R.id.undoPeg);
+        update();
 
         undoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -31,6 +40,13 @@ public class PegDisplay extends AppCompatActivity {
                 update();
             }
         });
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        Log.i(TAG, "onSaveInstanceState");
+        savedInstanceState.putSerializable(BOARD, peg);
     }
 
     public void onClick(View view) {

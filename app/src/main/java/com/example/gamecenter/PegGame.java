@@ -2,7 +2,9 @@ package com.example.gamecenter;
 
 import android.view.View;
 
-public class PegGame {
+import java.io.Serializable;
+
+public class PegGame implements Serializable {
 
     private int[][] board = new int[7][7]; //-1: outOfBounds, 0: no peg, 1: peg, 2: selected peg
     private int[][] boardAnterior;
