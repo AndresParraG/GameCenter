@@ -10,6 +10,7 @@ public class PegGame implements Serializable {
     private int[][] boardAnterior;
     private boolean selected;
     private boolean win;
+    private boolean lose;
     private int selectedPegI;
     private int selectedPegJ;
     private int pegsLeft;
@@ -19,6 +20,7 @@ public class PegGame implements Serializable {
         boardAnterior = copyMatriz(board);
         selected = false;
         win = false;
+        lose = false;
         pegsLeft = 32;
     }
 
@@ -46,6 +48,14 @@ public class PegGame implements Serializable {
         this.win = win;
     }
 
+    public boolean isLose() {
+        return lose;
+    }
+
+    public void setLose(boolean lose) {
+        this.lose = lose;
+    }
+
     public void generateBoard() {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
@@ -62,8 +72,8 @@ public class PegGame implements Serializable {
 
     public int[][] copyMatriz(int[][] orig) {
         int[][] matrizC = new int[orig.length][orig[0].length];
-        for (int i=0; i<orig.length; i++) {
-            for (int j = 0; j< orig[0].length; j++) {
+        for (int i = 0; i < orig.length; i++) {
+            for (int j = 0; j < orig[0].length; j++) {
                 matrizC[i][j] = orig[i][j];
             }
         }
@@ -108,9 +118,9 @@ public class PegGame implements Serializable {
         selected = false;
     }
 
-    public void deselectAll(int [][] m) {
-        for (int i = 0; i< m.length; i++) {
-            for (int j = 0; j<m[0].length; j++) {
+    public void deselectAll(int[][] m) {
+        for (int i = 0; i < m.length; i++) {
+            for (int j = 0; j < m[0].length; j++) {
                 if (m[i][j] == 2) {
                     m[i][j] = 1;
                 }
@@ -175,12 +185,41 @@ public class PegGame implements Serializable {
             deselect(selectedPegI, selectedPegJ);
         }
         selected = false;
+        lose = gameOver();
     }
 
     public void checkState() {
         if (pegsLeft == 1) {
             win = true;
         }
+    }
+
+    //revisar y corregir
+    public boolean gameOver() {
+        for (int i = 1; i < board.length - 1; i++) {
+            for (int j = 1; j < board[0].length-1; j++) {
+                if (board[i][j] == 1) {
+                    if (board[i + 1][j] == 1) {
+                        if (board[i-1][j] == 0) {
+                            return false;
+                        }
+                    } else if (board[i - 1][j] == 1) {
+                        if (board[i+1][j] == 0) {
+                            return false;
+                        }
+                    } else if (board[i][j + 1] == 1) {
+                        if (board[i][j-1] == 0) {
+                            return false;
+                        }
+                    } else if (board[i][j - 1] == 1) {
+                        if (board[i][j+1] == 0) {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        return true;
     }
 
 }
