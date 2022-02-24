@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -11,8 +12,8 @@ import android.widget.Toast;
 public class PegDisplay extends AppCompatActivity {
 
     private PegGame peg;
-    private TextView moveCounter;
     private TextView pegsCounter;
+    private Button undoButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,8 +21,16 @@ public class PegDisplay extends AppCompatActivity {
         setContentView(R.layout.activity_peg_display);
 
         peg = new PegGame();
-        moveCounter = (TextView) findViewById(R.id.movesCounter);
         pegsCounter = (TextView) findViewById(R.id.pegsCounter);
+        undoButton = findViewById(R.id.undoPeg);
+
+        undoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                peg.undo();
+                update();
+            }
+        });
     }
 
     public void onClick(View view) {
@@ -51,7 +60,6 @@ public class PegDisplay extends AppCompatActivity {
                 }
             }
         }
-        moveCounter.setText(Integer.toString(peg.getMoveCount()));
         pegsCounter.setText(Integer.toString(peg.getPegsLeft()));
     }
 

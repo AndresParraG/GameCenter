@@ -15,4 +15,5 @@
     <string name="pegs_left">Pegs Left:</string>
     <string name="_32">32</string>
     <string name="menu">MENU</string>
+    <string name="undo">Undo</string>
 </resources>

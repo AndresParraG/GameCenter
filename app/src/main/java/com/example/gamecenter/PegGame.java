@@ -5,18 +5,18 @@ import android.view.View;
 public class PegGame {
 
     private int[][] board = new int[7][7]; //-1: outOfBounds, 0: no peg, 1: peg, 2: selected peg
+    private int[][] boardAnterior;
     private boolean selected;
     private boolean win;
     private int selectedPegI;
     private int selectedPegJ;
-    private int moveCount;
     private int pegsLeft;
 
     public PegGame() {
         generateBoard();
+        boardAnterior = copyMatriz(board);
         selected = false;
         win = false;
-        moveCount = 0;
         pegsLeft = 32;
     }
 
@@ -26,14 +26,6 @@ public class PegGame {
 
     public void setBoard(int[][] board) {
         this.board = board;
-    }
-
-    public int getMoveCount() {
-        return moveCount;
-    }
-
-    public void setMoveCount(int moveCount) {
-        this.moveCount = moveCount;
     }
 
     public int getPegsLeft() {
@@ -64,6 +56,22 @@ public class PegGame {
                 }
             }
         }
+    }
+
+    public int[][] copyMatriz(int[][] orig) {
+        int[][] matrizC = new int[orig.length][orig[0].length];
+        for (int i=0; i<orig.length; i++) {
+            for (int j = 0; j< orig[0].length; j++) {
+                matrizC[i][j] = orig[i][j];
+            }
+        }
+        return matrizC;
+    }
+
+    //arreglar contador de pegs
+    public void undo() {
+        board = copyMatriz(boardAnterior);
+        selected = false;
     }
 
     public void clickPeg(View view) {
@@ -98,24 +106,36 @@ public class PegGame {
         selected = false;
     }
 
+    public void deselectAll(int [][] m) {
+        for (int i = 0; i< m.length; i++) {
+            for (int j = 0; j<m[0].length; j++) {
+                if (m[i][j] == 2) {
+                    m[i][j] = 1;
+                }
+            }
+        }
+    }
+
     public void movimiento(int i, int j) {
         if (selectedPegI == i) {
-            if ((selectedPegJ > j) && (selectedPegJ - j == 2)) { //abajo --> arriba
+            if ((selectedPegJ > j) && (selectedPegJ - j == 2)) {
                 if (board[i][selectedPegJ - 1] == 1) {
+                    boardAnterior = copyMatriz(board);
+                    deselectAll(boardAnterior);
                     board[i][selectedPegJ - 1] = 0;
                     board[selectedPegI][selectedPegJ] = 0;
                     board[i][j] = 1;
-                    moveCount++;
                     pegsLeft--;
                 } else {
                     deselect(selectedPegI, selectedPegJ);
                 }
-            } else if ((selectedPegJ < j) && (j - selectedPegJ == 2)) { //arriba --> abajo
+            } else if ((selectedPegJ < j) && (j - selectedPegJ == 2)) {
                 if (board[i][j - 1] == 1) {
+                    boardAnterior = copyMatriz(board);
+                    deselectAll(boardAnterior);
                     board[i][j - 1] = 0;
                     board[selectedPegI][selectedPegJ] = 0;
                     board[i][j] = 1;
-                    moveCount++;
                     pegsLeft--;
                 } else {
                     deselect(selectedPegI, selectedPegJ);
@@ -124,22 +144,24 @@ public class PegGame {
                 deselect(selectedPegI, selectedPegJ);
             }
         } else if (selectedPegJ == j) {
-            if ((selectedPegI > i) && (selectedPegI - i == 2)) { //derecha --> izquierda
+            if ((selectedPegI > i) && (selectedPegI - i == 2)) {
                 if (board[selectedPegI - 1][j] == 1) {
+                    boardAnterior = copyMatriz(board);
+                    deselectAll(boardAnterior);
                     board[selectedPegI - 1][j] = 0;
                     board[selectedPegI][selectedPegJ] = 0;
                     board[i][j] = 1;
-                    moveCount++;
                     pegsLeft--;
                 } else {
                     deselect(selectedPegI, selectedPegJ);
                 }
-            } else if ((selectedPegI < i) && (i - selectedPegI == 2)) { //izquierda --> derecha
+            } else if ((selectedPegI < i) && (i - selectedPegI == 2)) {
                 if (board[i - 1][j] == 1) {
+                    boardAnterior = copyMatriz(board);
+                    deselectAll(boardAnterior);
                     board[i - 1][j] = 0;
                     board[selectedPegI][selectedPegJ] = 0;
                     board[i][j] = 1;
-                    moveCount++;
                     pegsLeft--;
                 } else {
                     deselect(selectedPegI, selectedPegJ);
