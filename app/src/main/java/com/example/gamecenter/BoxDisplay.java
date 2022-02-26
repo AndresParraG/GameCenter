@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
@@ -18,15 +19,22 @@ public class BoxDisplay extends AppCompatActivity {
     Button startButton;
     Button undoButton;
 
+    private static final String TAG = "BoxDisplay";
+    private static final String BOX_BOARD = "index";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_box_display);
 
+        if (savedInstanceState != null) {
+            game = (BoxGame) savedInstanceState.getSerializable(BOX_BOARD);
+        } else {
+            game = new BoxGame();
+        }
         grid = findViewById(R.id.grid);
         startButton = findViewById(R.id.button);
         undoButton = findViewById(R.id.undoBox);
-        game = new BoxGame();
         updateGrid(game.getMatriz());
 
         //reset
@@ -57,6 +65,7 @@ public class BoxDisplay extends AppCompatActivity {
                     lose();
                 }
             }
+
             public void onSwipeRight() {
                 if (!game.isLose()) {
                     game.swipeRight();
@@ -66,6 +75,7 @@ public class BoxDisplay extends AppCompatActivity {
                     lose();
                 }
             }
+
             public void onSwipeLeft() {
                 if (!game.isLose()) {
                     game.swipeLeft();
@@ -75,6 +85,7 @@ public class BoxDisplay extends AppCompatActivity {
                     lose();
                 }
             }
+
             public void onSwipeBottom() {
                 if (!game.isLose()) {
                     game.swipeDown();
@@ -87,16 +98,23 @@ public class BoxDisplay extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState){
+        super.onSaveInstanceState(savedInstanceState);
+        Log.i(TAG, "onSaveInstanceState");
+        savedInstanceState.putSerializable(BOX_BOARD, game);
+    }
+
     public TextView getTextViewID(int i, int j) {
-        String viewID = "view"+i+j;
+        String viewID = "view" + i + j;
         int resID = getResources().getIdentifier(viewID, "id", getPackageName());
         return findViewById(resID);
     }
 
     public void updateGrid(int[][] m) {
         System.out.println("Grid updated");
-        for (int i=0; i<m.length; i++) {
-            for (int j=0; j<m[0].length; j++) {
+        for (int i = 0; i < m.length; i++) {
+            for (int j = 0; j < m[0].length; j++) {
                 textID = getTextViewID(i, j);
                 if (m[i][j] != 0) {
                     textID.setText(Integer.toString(m[i][j]));

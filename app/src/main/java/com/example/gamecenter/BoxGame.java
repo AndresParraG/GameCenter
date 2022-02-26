@@ -1,6 +1,8 @@
 package com.example.gamecenter;
 
-public class BoxGame {
+import java.io.Serializable;
+
+public class BoxGame implements Serializable {
 
     private int[][] matriz = new int[4][4];
     private int[][] matrizAnterior;
