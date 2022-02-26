@@ -53,9 +53,11 @@ public class PegDisplay extends AppCompatActivity {
         if (!peg.isWin() && !peg.isLose()) {
             peg.clickPeg(view);
             update();
-        } else if(peg.isWin()){
+        }
+        if(peg.isWin()){
             Toast.makeText(this, "WIN", Toast.LENGTH_SHORT).show();
-        } else if(peg.isLose()) {
+        }
+        if(peg.isLose()) {
             Toast.makeText(this, "LOSE", Toast.LENGTH_SHORT).show();
         }
     }

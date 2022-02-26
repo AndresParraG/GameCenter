@@ -16,11 +16,14 @@ public class BoxDisplay extends AppCompatActivity {
     BoxGame game;
     GridLayout grid;
     TextView textID;
+    TextView score;
     Button startButton;
     Button undoButton;
 
     private static final String TAG = "BoxDisplay";
     private static final String BOX_BOARD = "index";
+
+    private boolean winShow = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,7 @@ public class BoxDisplay extends AppCompatActivity {
             game = new BoxGame();
         }
         grid = findViewById(R.id.grid);
+        score = findViewById(R.id.score);
         startButton = findViewById(R.id.button);
         undoButton = findViewById(R.id.undoBox);
         updateGrid(game.getMatriz());
@@ -61,8 +65,12 @@ public class BoxDisplay extends AppCompatActivity {
                     game.swipeUp();
                     updateGrid(game.getMatriz());
 
-                } else {
+                }
+                if (game.isLose()){
                     lose();
+                }
+                if (game.isWin()) {
+                    win();
                 }
             }
 
@@ -71,8 +79,12 @@ public class BoxDisplay extends AppCompatActivity {
                     game.swipeRight();
                     updateGrid(game.getMatriz());
 
-                } else {
+                }
+                if (game.isLose()){
                     lose();
+                }
+                if (game.isWin()) {
+                    win();
                 }
             }
 
@@ -81,8 +93,12 @@ public class BoxDisplay extends AppCompatActivity {
                     game.swipeLeft();
                     updateGrid(game.getMatriz());
 
-                } else {
+                }
+                if (game.isLose()){
                     lose();
+                }
+                if (game.isWin()) {
+                    win();
                 }
             }
 
@@ -91,8 +107,12 @@ public class BoxDisplay extends AppCompatActivity {
                     game.swipeDown();
                     updateGrid(game.getMatriz());
 
-                } else {
+                }
+                if (game.isLose()){
                     lose();
+                }
+                if (game.isWin()) {
+                    win();
                 }
             }
         });
@@ -123,10 +143,18 @@ public class BoxDisplay extends AppCompatActivity {
                 }
             }
         }
+        score.setText(Integer.toString(game.getScore()));
     }
 
     public void lose() {
         Toast.makeText(this, "LOSE", Toast.LENGTH_SHORT).show();
+    }
+
+    public void win() {
+        if (!winShow) {
+            Toast.makeText(this, "WIN", Toast.LENGTH_SHORT).show();
+            winShow = true;
+        }
     }
 
 }

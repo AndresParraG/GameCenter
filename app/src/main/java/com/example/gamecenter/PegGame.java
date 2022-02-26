@@ -6,11 +6,17 @@ import java.io.Serializable;
 
 public class PegGame implements Serializable {
 
+    private final static int OUT_OF_BOUNDS = -1;
+    private final static int EMPTY = 0;
+    private final static int PEG = 1;
+    private final static int SELECTED_PEG = 2;
+
     private int[][] board = new int[7][7]; //-1: outOfBounds, 0: no peg, 1: peg, 2: selected peg
     private int[][] boardAnterior;
     private boolean selected;
     private boolean win;
     private boolean lose;
+    private boolean undoPressed;
     private int selectedPegI;
     private int selectedPegJ;
     private int pegsLeft;
@@ -21,6 +27,7 @@ public class PegGame implements Serializable {
         selected = false;
         win = false;
         lose = false;
+        undoPressed = false;
         pegsLeft = 32;
     }
 
@@ -60,11 +67,11 @@ public class PegGame implements Serializable {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
                 if ((i < 2 || i > 4) && (j < 2 || j > 4)) {
-                    board[i][j] = -1;
+                    board[i][j] = OUT_OF_BOUNDS;
                 } else if (i == 3 && j == 3) {
-                    board[i][j] = 0;
+                    board[i][j] = EMPTY;
                 } else {
-                    board[i][j] = 1;
+                    board[i][j] = PEG;
                 }
             }
         }
@@ -82,24 +89,29 @@ public class PegGame implements Serializable {
 
     //arreglar contador de pegs
     public void undo() {
-        board = copyMatriz(boardAnterior);
-        selected = false;
+        if (!undoPressed) {
+            board = copyMatriz(boardAnterior);
+            selected = false;
+            lose = false;
+            undoPressed = true;
+            pegsLeft++;
+        }
     }
 
     public void clickPeg(View view) {
         int i = Character.getNumericValue(view.getTag().toString().charAt(0));
         int j = Character.getNumericValue(view.getTag().toString().charAt(1));
         if (!selected) {
-            if (board[i][j] == 1) {
+            if (board[i][j] == PEG) {
                 selectPeg(i, j);
             }
         } else {
             if (selectedPegI == i && selectedPegJ == j) {
                 deselect(i, j);
-            } else if (board[i][j] == 1) {
+            } else if (board[i][j] == PEG) {
                 deselect(selectedPegI, selectedPegJ);
                 selectPeg(i, j);
-            } else if (board[i][j] == 0) {
+            } else if (board[i][j] == EMPTY) {
                 movimiento(i, j);
             }
         }
@@ -109,20 +121,20 @@ public class PegGame implements Serializable {
     public void selectPeg(int i, int j) {
         selectedPegI = i;
         selectedPegJ = j;
-        board[i][j] = 2;
+        board[i][j] = SELECTED_PEG;
         selected = true;
     }
 
     public void deselect(int i, int j) {
-        board[i][j] = 1;
+        board[i][j] = PEG;
         selected = false;
     }
 
     public void deselectAll(int[][] m) {
         for (int i = 0; i < m.length; i++) {
             for (int j = 0; j < m[0].length; j++) {
-                if (m[i][j] == 2) {
-                    m[i][j] = 1;
+                if (m[i][j] == SELECTED_PEG) {
+                    m[i][j] = PEG;
                 }
             }
         }
@@ -130,25 +142,21 @@ public class PegGame implements Serializable {
 
     public void movimiento(int i, int j) {
         if (selectedPegI == i) {
-            if ((selectedPegJ > j) && (selectedPegJ - j == 2)) {
-                if (board[i][selectedPegJ - 1] == 1) {
+            if ((selectedPegJ > j) && (selectedPegJ - j == SELECTED_PEG)) {
+                if (board[i][selectedPegJ - 1] == PEG) {
                     boardAnterior = copyMatriz(board);
                     deselectAll(boardAnterior);
-                    board[i][selectedPegJ - 1] = 0;
-                    board[selectedPegI][selectedPegJ] = 0;
-                    board[i][j] = 1;
-                    pegsLeft--;
+                    board[i][selectedPegJ - 1] = EMPTY;
+                    pegMovement(i, j);
                 } else {
                     deselect(selectedPegI, selectedPegJ);
                 }
-            } else if ((selectedPegJ < j) && (j - selectedPegJ == 2)) {
-                if (board[i][j - 1] == 1) {
+            } else if ((selectedPegJ < j) && (j - selectedPegJ == SELECTED_PEG)) {
+                if (board[i][j - 1] == PEG) {
                     boardAnterior = copyMatriz(board);
                     deselectAll(boardAnterior);
-                    board[i][j - 1] = 0;
-                    board[selectedPegI][selectedPegJ] = 0;
-                    board[i][j] = 1;
-                    pegsLeft--;
+                    board[i][j - 1] = EMPTY;
+                    pegMovement(i, j);
                 } else {
                     deselect(selectedPegI, selectedPegJ);
                 }
@@ -156,25 +164,21 @@ public class PegGame implements Serializable {
                 deselect(selectedPegI, selectedPegJ);
             }
         } else if (selectedPegJ == j) {
-            if ((selectedPegI > i) && (selectedPegI - i == 2)) {
+            if ((selectedPegI > i) && (selectedPegI - i == SELECTED_PEG)) {
                 if (board[selectedPegI - 1][j] == 1) {
                     boardAnterior = copyMatriz(board);
                     deselectAll(boardAnterior);
-                    board[selectedPegI - 1][j] = 0;
-                    board[selectedPegI][selectedPegJ] = 0;
-                    board[i][j] = 1;
-                    pegsLeft--;
+                    board[selectedPegI - 1][j] = EMPTY;
+                    pegMovement(i, j);
                 } else {
                     deselect(selectedPegI, selectedPegJ);
                 }
-            } else if ((selectedPegI < i) && (i - selectedPegI == 2)) {
-                if (board[i - 1][j] == 1) {
+            } else if ((selectedPegI < i) && (i - selectedPegI == SELECTED_PEG)) {
+                if (board[i - 1][j] == PEG) {
                     boardAnterior = copyMatriz(board);
                     deselectAll(boardAnterior);
-                    board[i - 1][j] = 0;
-                    board[selectedPegI][selectedPegJ] = 0;
-                    board[i][j] = 1;
-                    pegsLeft--;
+                    board[i - 1][j] = EMPTY;
+                    pegMovement(i, j);
                 } else {
                     deselect(selectedPegI, selectedPegJ);
                 }
@@ -188,31 +192,40 @@ public class PegGame implements Serializable {
         lose = gameOver();
     }
 
+    public void pegMovement(int i, int j) {
+        board[selectedPegI][selectedPegJ] = EMPTY;
+        board[i][j] = PEG;
+        pegsLeft--;
+        undoPressed = false;
+    }
+
     public void checkState() {
         if (pegsLeft == 1) {
             win = true;
         }
     }
 
-    //revisar y corregir
     public boolean gameOver() {
         for (int i = 1; i < board.length - 1; i++) {
-            for (int j = 1; j < board[0].length-1; j++) {
-                if (board[i][j] == 1) {
-                    if (board[i + 1][j] == 1) {
-                        if (board[i-1][j] == 0) {
+            for (int j = 1; j < board[0].length - 1; j++) {
+                if (board[i][j] == PEG) {
+                    if (board[i + 1][j] == PEG) {
+                        if (board[i - 1][j] == EMPTY) {
                             return false;
                         }
-                    } else if (board[i - 1][j] == 1) {
-                        if (board[i+1][j] == 0) {
+                    }
+                    if (board[i - 1][j] == PEG) {
+                        if (board[i + 1][j] == EMPTY) {
                             return false;
                         }
-                    } else if (board[i][j + 1] == 1) {
-                        if (board[i][j-1] == 0) {
+                    }
+                    if (board[i][j + 1] == PEG) {
+                        if (board[i][j - 1] == EMPTY) {
                             return false;
                         }
-                    } else if (board[i][j - 1] == 1) {
-                        if (board[i][j+1] == 0) {
+                    }
+                    if (board[i][j - 1] == PEG) {
+                        if (board[i][j + 1] == EMPTY) {
                             return false;
                         }
                     }
