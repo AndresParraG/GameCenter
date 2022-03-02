@@ -9,4 +9,21 @@
     <color name="white">#FFFFFFFF</color>
     <color name="orange">#E67E22</color>
     <color name="yellow">#F1C40F</color>
+
+    <color name="_board">#999999</color>
+    <color name="_0">#D0D0D0</color>
+    <color name="_2">#FBD48D</color>
+    <color name="_4">#F8BA48</color>
+    <color name="_8">#F19F08</color>
+    <color name="_16">#F86C6C</color>
+    <color name="_32">#F52828</color>
+    <color name="_64">#CC0909</color>
+    <color name="_128">#C081B8</color>
+    <color name="_252">#A6539C</color>
+    <color name="_512">#8E4785</color>
+    <color name="_1024">#5EBFA7</color>
+    <color name="_2048">#327F6C</color>
+    <color name="_else">#472238</color>
+
+
 </resources>

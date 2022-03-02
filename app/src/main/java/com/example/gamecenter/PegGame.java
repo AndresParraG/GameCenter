@@ -27,7 +27,7 @@ public class PegGame implements Serializable {
         selected = false;
         win = false;
         lose = false;
-        undoPressed = false;
+        undoPressed = true;
         pegsLeft = 32;
     }
 
@@ -205,6 +205,7 @@ public class PegGame implements Serializable {
         }
     }
 
+    //arreglar en los lados
     public boolean gameOver() {
         for (int i = 1; i < board.length - 1; i++) {
             for (int j = 1; j < board[0].length - 1; j++) {

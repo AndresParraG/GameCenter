@@ -67,10 +67,10 @@ public class BoxDisplay extends AppCompatActivity {
 
                 }
                 if (game.isLose()){
-                    lose();
+                    Toast.makeText(BoxDisplay.this, "LOSE", Toast.LENGTH_SHORT).show();
                 }
                 if (game.isWin()) {
-                    win();
+                    Toast.makeText(BoxDisplay.this, "WIN", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -81,10 +81,10 @@ public class BoxDisplay extends AppCompatActivity {
 
                 }
                 if (game.isLose()){
-                    lose();
+                    Toast.makeText(BoxDisplay.this, "LOSE", Toast.LENGTH_SHORT).show();
                 }
                 if (game.isWin()) {
-                    win();
+                    Toast.makeText(BoxDisplay.this, "WIN", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -95,10 +95,10 @@ public class BoxDisplay extends AppCompatActivity {
 
                 }
                 if (game.isLose()){
-                    lose();
+                    Toast.makeText(BoxDisplay.this, "LOSE", Toast.LENGTH_SHORT).show();
                 }
                 if (game.isWin()) {
-                    win();
+                    Toast.makeText(BoxDisplay.this, "WIN", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -109,10 +109,10 @@ public class BoxDisplay extends AppCompatActivity {
 
                 }
                 if (game.isLose()){
-                    lose();
+                    Toast.makeText(BoxDisplay.this, "LOSE", Toast.LENGTH_SHORT).show();
                 }
                 if (game.isWin()) {
-                    win();
+                    Toast.makeText(BoxDisplay.this, "WIN", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -141,19 +141,53 @@ public class BoxDisplay extends AppCompatActivity {
                 } else {
                     textID.setText(getString(R.string.null_value));
                 }
+                updateColor(textID, i, j);
             }
         }
         score.setText(Integer.toString(game.getScore()));
     }
 
-    public void lose() {
-        Toast.makeText(this, "LOSE", Toast.LENGTH_SHORT).show();
-    }
-
-    public void win() {
-        if (!winShow) {
-            Toast.makeText(this, "WIN", Toast.LENGTH_SHORT).show();
-            winShow = true;
+    public void updateColor(TextView tile, int i, int j) {
+        switch (game.getMatriz()[i][j]) {
+            case 0:
+                tile.setBackgroundResource(R.color._0);
+                break;
+            case 2:
+                tile.setBackgroundResource(R.color._2);
+                break;
+            case 4:
+                tile.setBackgroundResource(R.color._4);
+                break;
+            case 8:
+                tile.setBackgroundResource(R.color._8);
+                break;
+            case 16:
+                tile.setBackgroundResource(R.color._16);
+                break;
+            case 32:
+                tile.setBackgroundResource(R.color._32);
+                break;
+            case 64:
+                tile.setBackgroundResource(R.color._64);
+                break;
+            case 128:
+                tile.setBackgroundResource(R.color._128);
+                break;
+            case 252:
+                tile.setBackgroundResource(R.color._252);
+                break;
+            case 512:
+                tile.setBackgroundResource(R.color._512);
+                break;
+            case 1048:
+                tile.setBackgroundResource(R.color._1024);
+                break;
+            case 2048:
+                tile.setBackgroundResource(R.color._2048);
+                break;
+            default:
+                tile.setBackgroundResource(R.color._else);
+                break;
         }
     }
 

@@ -44,7 +44,7 @@ public class SplashActivity extends AppCompatActivity {
 
             public void onAnimationEnd(Animation animation) {
                 startActivity(new Intent(SplashActivity.this,
-                        MenuActivity.class));
+                        Login.class));
                 SplashActivity.this.finish();
             }
 

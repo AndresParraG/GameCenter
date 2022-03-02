@@ -27,12 +27,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_weight="1"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_gravity="center_vertical">
     <Button
         android:id="@+id/start2048"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="135dp"
         android:layout_gravity="center_horizontal|center_vertical"
         android:text="@string/_2048_game"/>
 
@@ -42,6 +43,13 @@
         android:layout_width="wrap_content"
         android:layout_gravity="center_horizontal|center_vertical"
         android:text="@string/peg_solitaire"/>
+
+    <Button
+        android:id="@+id/startScore"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:text="@string/score"/>
 </LinearLayout>
 
 </LinearLayout>
