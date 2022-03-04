@@ -15,6 +15,8 @@ public class PegDisplay extends AppCompatActivity {
     private PegGame peg;
     private TextView pegsCounter;
     private Button undoButton;
+    private DataBase db;
+    private String user;
 
     private static final String TAG = "PegDisplay";
     private static final String BOARD = "index";
@@ -23,6 +25,10 @@ public class PegDisplay extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_peg_display);
+
+        db = new DataBase(this);
+        Bundle extras = getIntent().getExtras();
+        user = extras.getString("user");
 
         if (savedInstanceState != null) {
             peg = (PegGame) savedInstanceState.getSerializable(BOARD);
@@ -66,6 +72,18 @@ public class PegDisplay extends AppCompatActivity {
         peg = new PegGame();
         update();
     }
+
+    /*
+    public void saveScore() {
+        int hs = db.returnHS(user, true);
+        if (hs == -1) {
+            System.out.println("ERROR ON DATABASE HIGHSCORE RETRIEVAL");
+        } else if (hs < peg.getScore()) {
+            //db.updatePeg(, game.getScore()); return user string instead of id
+        }
+    }
+     */
+
 
     public void update() {
         for (int i=0; i<peg.getBoard().length; i++) {

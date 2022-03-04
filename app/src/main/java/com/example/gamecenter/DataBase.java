@@ -71,11 +71,12 @@ public class DataBase extends SQLiteOpenHelper {
 
     public long insert(String user, String pass) {
         long newId = 0;
+        int scores = 0;
         ContentValues values = new ContentValues();
         values.put(USER, user);
         values.put(PASSWORD, pass);
-        values.put(SCORE_2048, 0);
-        values.put(SCORE_PEG, 0);
+        values.put(SCORE_2048, scores);
+        values.put(SCORE_PEG, scores);
         try {
             if (mWriteableDB == null) {
                 mWriteableDB = getWritableDatabase();
@@ -87,51 +88,38 @@ public class DataBase extends SQLiteOpenHelper {
         return newId;
     }
 
-    public int update2048(int id, int score) {
-        int mNumberOfRowsUpdated = -1;
-        try {
-            if (mWriteableDB == null) {
-                mWriteableDB = getWritableDatabase();
-            }
-            ContentValues values = new ContentValues();
-            values.put(SCORE_2048, score);
-            mNumberOfRowsUpdated = mWriteableDB.update(SCORE_LIST_TABLE, values,
-                    KEY_ID + " = ?", new String[]{String.valueOf(id)});
-        } catch (Exception e) {
-            Log.d(TAG, "UPDATE EXCEPTION " + e.getMessage());
-        }
-        return  mNumberOfRowsUpdated;
-    }
-
-    public int updatePeg(int id, int score) {
-        int mNumberOfRowsUpdated = -1;
-        try {
-            if (mWriteableDB == null) {
-                mWriteableDB = getWritableDatabase();
-            }
-            ContentValues values = new ContentValues();
-            values.put(SCORE_PEG, score);
-            mNumberOfRowsUpdated = mWriteableDB.update(SCORE_LIST_TABLE, values,
-                    KEY_ID + " = ?", new String[]{String.valueOf(id)});
-        } catch (Exception e) {
-            Log.d(TAG, "UPDATE EXCEPTION " + e.getMessage());
-        }
-        return  mNumberOfRowsUpdated;
-    }
-
-    public boolean checkUserPass(String user, String pass) {
-        boolean found = false;
-        String query = "SELECT " + USER + ", " + PASSWORD + " FROM " +
-                SCORE_LIST_TABLE;
+    public String[] returnData(String user) {
+        String data[] = new String[3];
+        String query = "SELECT * FROM " + SCORE_LIST_TABLE + " WHERE " + USER + " = ?";
         Cursor cursor = null;
         try {
             if (mRedeableDB == null) {
                 mRedeableDB = getReadableDatabase();
             }
-            cursor = mRedeableDB.rawQuery(query, null);
+            cursor = mRedeableDB.rawQuery(query, new String[]{ user });
             cursor.moveToFirst();
-            if (cursor.getString(cursor.getColumnIndexOrThrow(USER)).equals(user) &&
-            cursor.getString(cursor.getColumnIndexOrThrow(PASSWORD)).equals(pass)) {
+            if (cursor.getCount() > 0) {
+                data[0] = cursor.getString(1);
+                data[1] = cursor.getString(3);
+                data[2] = cursor.getString(4);
+            }
+        } catch (Exception e) {
+            Log.d(TAG, "EXCEPTION! " + e.getMessage());
+        }
+        return data;
+    }
+
+    public boolean checkUserPass(String user, String pass) {
+        boolean found = false;
+        String query = "SELECT " + USER + ", " + PASSWORD + " FROM " +
+                SCORE_LIST_TABLE + " WHERE "+ USER + " = ?" + " AND " + PASSWORD + " = ?";
+        Cursor cursor = null;
+        try {
+            if (mRedeableDB == null) {
+                mRedeableDB = getReadableDatabase();
+            }
+            cursor = mRedeableDB.rawQuery(query, new String[]{ user, pass });
+            if (cursor.getCount() > 0) {
                 found = true;
             }
         } catch (Exception e) {
@@ -145,15 +133,14 @@ public class DataBase extends SQLiteOpenHelper {
     public boolean checkUser(String user) {
         boolean found = false;
         String query = "SELECT " + USER + " FROM " +
-                SCORE_LIST_TABLE;
+                SCORE_LIST_TABLE + " WHERE " + USER + " = ?";
         Cursor cursor = null;
         try {
             if (mRedeableDB == null) {
                 mRedeableDB = getReadableDatabase();
             }
-            cursor = mRedeableDB.rawQuery(query, null);
-            cursor.moveToFirst();
-            if (cursor.getString(cursor.getColumnIndexOrThrow(USER)).equals(user)) {
+            cursor = mRedeableDB.rawQuery(query, new String[] { user });
+            if (cursor.getCount() > 0) {
                 found = true;
             }
         } catch (Exception e) {
@@ -162,5 +149,74 @@ public class DataBase extends SQLiteOpenHelper {
             cursor.close();
         }
         return found;
+    }
+
+    public int returnHS2048(String user) {
+        String query = "SELECT * FROM " + SCORE_LIST_TABLE + " WHERE " + USER + " = ?";
+        Cursor cursor = null;
+        try {
+            if (mRedeableDB == null) {
+                mRedeableDB = getReadableDatabase();
+            }
+            cursor = mRedeableDB.rawQuery(query, new String[]{ user });
+            cursor.moveToFirst();
+            int hs = cursor.getInt(cursor.getColumnIndexOrThrow(SCORE_2048));
+            return hs;
+        } catch (Exception e) {
+            Log.d(TAG, "EXCEPTION! " + e.getMessage());
+        } finally {
+            cursor.close();
+        }
+        return -1;
+    }
+
+    public int update2048(String user, int score) {
+        int mNumberOfRowsUpdated = -1;
+        try {
+            if (mWriteableDB == null) {
+                mWriteableDB = getWritableDatabase();
+            }
+            ContentValues values = new ContentValues();
+            values.put(SCORE_2048, score);
+            mNumberOfRowsUpdated = mWriteableDB.update(SCORE_LIST_TABLE, values,
+                    USER + " = ?", new String[]{ user });
+        } catch (Exception e) {
+            Log.d(TAG, "UPDATE EXCEPTION " + e.getMessage());
+        }
+        return  mNumberOfRowsUpdated;
+    }
+
+    public int returnHSPeg(String user) {
+        String query = "SELECT " + SCORE_PEG +" FROM " + SCORE_LIST_TABLE +
+                " WHERE " + user + " = ?";
+        Cursor cursor = null;
+        try {
+            if (mRedeableDB == null) {
+                mRedeableDB = getReadableDatabase();
+            }
+            cursor = mRedeableDB.rawQuery(query, new String[]{ user });
+            return cursor.getInt(cursor.getColumnIndexOrThrow(SCORE_PEG));
+        } catch (Exception e) {
+            Log.d(TAG, "EXCEPTION! " + e.getMessage());
+        } finally {
+            cursor.close();
+        }
+        return -1;
+    }
+
+    public int updatePeg(String user, int score) {
+        int mNumberOfRowsUpdated = -1;
+        try {
+            if (mWriteableDB == null) {
+                mWriteableDB = getWritableDatabase();
+            }
+            ContentValues values = new ContentValues();
+            values.put(SCORE_PEG, score);
+            mNumberOfRowsUpdated = mWriteableDB.update(SCORE_LIST_TABLE, values,
+                    USER + " = ?", new String[]{ user });
+        } catch (Exception e) {
+            Log.d(TAG, "UPDATE EXCEPTION " + e.getMessage());
+        }
+        return  mNumberOfRowsUpdated;
     }
 }

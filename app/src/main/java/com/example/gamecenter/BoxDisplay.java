@@ -3,6 +3,7 @@ package com.example.gamecenter;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +21,9 @@ public class BoxDisplay extends AppCompatActivity {
     Button startButton;
     Button undoButton;
 
+    private String user;
+    DataBase db;
+
     private static final String TAG = "BoxDisplay";
     private static final String BOX_BOARD = "index";
 
@@ -29,6 +33,10 @@ public class BoxDisplay extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_box_display);
+
+        db = new DataBase(this);
+        Bundle extras = getIntent().getExtras();
+        user = extras.getString("user");
 
         if (savedInstanceState != null) {
             game = (BoxGame) savedInstanceState.getSerializable(BOX_BOARD);
@@ -68,6 +76,7 @@ public class BoxDisplay extends AppCompatActivity {
                 }
                 if (game.isLose()){
                     Toast.makeText(BoxDisplay.this, "LOSE", Toast.LENGTH_SHORT).show();
+                    saveScore();
                 }
                 if (game.isWin()) {
                     Toast.makeText(BoxDisplay.this, "WIN", Toast.LENGTH_SHORT).show();
@@ -82,6 +91,7 @@ public class BoxDisplay extends AppCompatActivity {
                 }
                 if (game.isLose()){
                     Toast.makeText(BoxDisplay.this, "LOSE", Toast.LENGTH_SHORT).show();
+                    saveScore();
                 }
                 if (game.isWin()) {
                     Toast.makeText(BoxDisplay.this, "WIN", Toast.LENGTH_SHORT).show();
@@ -96,6 +106,7 @@ public class BoxDisplay extends AppCompatActivity {
                 }
                 if (game.isLose()){
                     Toast.makeText(BoxDisplay.this, "LOSE", Toast.LENGTH_SHORT).show();
+                    saveScore();
                 }
                 if (game.isWin()) {
                     Toast.makeText(BoxDisplay.this, "WIN", Toast.LENGTH_SHORT).show();
@@ -110,6 +121,7 @@ public class BoxDisplay extends AppCompatActivity {
                 }
                 if (game.isLose()){
                     Toast.makeText(BoxDisplay.this, "LOSE", Toast.LENGTH_SHORT).show();
+                    saveScore();
                 }
                 if (game.isWin()) {
                     Toast.makeText(BoxDisplay.this, "WIN", Toast.LENGTH_SHORT).show();
@@ -145,6 +157,15 @@ public class BoxDisplay extends AppCompatActivity {
             }
         }
         score.setText(Integer.toString(game.getScore()));
+    }
+
+    public void saveScore() {
+        int hs = db.returnHS2048(user);
+        if (hs == -1) {
+            System.out.println("ERROR ON DATABASE HIGHSCORE RETRIEVAL");
+        } else if (hs < game.getScore()) {
+            db.update2048(user, game.getScore());
+        }
     }
 
     public void updateColor(TextView tile, int i, int j) {

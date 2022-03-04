@@ -35,21 +35,27 @@ public class MenuActivity extends AppCompatActivity {
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MenuActivity.this, BoxDisplay.class));
+                Intent boxGame = new Intent(MenuActivity.this, BoxDisplay.class);
+                boxGame.putExtra("user", user);
+                startActivity(boxGame);
             }
         });
 
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MenuActivity.this, PegDisplay.class));
+                Intent pegGame = new Intent(MenuActivity.this, PegDisplay.class);
+                pegGame.putExtra("user", user);
+                startActivity(pegGame);
             }
         });
 
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MenuActivity.this, Score.class));
+                Intent score = new Intent(MenuActivity.this, Score.class);
+                score.putExtra("user", user);
+                startActivity(score);
             }
         });
     }

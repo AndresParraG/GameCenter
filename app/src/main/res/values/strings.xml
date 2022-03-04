@@ -24,4 +24,7 @@
     <string name="or_sign_up_instead">- or Sign Up instead -</string>
     <string name="sign_up">Sign Up</string>
     <string name="repeat_password">Repeat Password...</string>
+    <string name="user">User:</string>
+    <string name="_2048_hs">2048 HS:</string>
+    <string name="peg_hs">Peg HS:</string>
 </resources>
