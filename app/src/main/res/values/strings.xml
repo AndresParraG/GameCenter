@@ -27,4 +27,6 @@
     <string name="user">User:</string>
     <string name="_2048_hs">2048 HS:</string>
     <string name="peg_hs">Peg HS:</string>
+    <string name="reset">Reset</string>
+    <string name="_00_00">00:00</string>
 </resources>

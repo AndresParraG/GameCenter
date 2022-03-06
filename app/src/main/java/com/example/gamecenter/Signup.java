@@ -31,10 +31,14 @@ public class Signup extends AppCompatActivity {
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (db.checkUser(user.getText().toString())) {
+                String usr = user.getText().toString();
+                String pas = pass.getText().toString();
+                if (usr.equals("") || pas.equals("")) {
+                    Toast.makeText(Signup.this, "INVALID INPUT", Toast.LENGTH_SHORT).show();
+                } else if (db.checkUser(usr)) {
                     Toast.makeText(Signup.this, "USER ALREADY EXISTS", Toast.LENGTH_SHORT).show();
-                } else if(pass.getText().toString().equals(rePass.getText().toString())) {
-                    db.insert(user.getText().toString(), pass.getText().toString());
+                } else if (pas.equals(rePass.getText().toString())) {
+                    db.insert(usr, pas);
                     startActivity(new Intent(Signup.this, MenuActivity.class));
                     finish();
                 } else {

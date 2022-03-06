@@ -6,53 +6,55 @@
     android:layout_height="match_parent"
     tools:context=".PegDisplay">
 
-    <Button
-        android:id="@+id/undoPeg"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/undo"
-        app:layout_constraintEnd_toStartOf="@+id/gridLayout"
-        app:layout_constraintHorizontal_bias="0.452"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="66dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="72dp"
-        android:contentDescription="@string/restart"
-        android:onClick="reset"
-        android:src="@drawable/restart_icon"
-        app:layout_constraintEnd_toStartOf="@+id/gridLayout"
-        app:layout_constraintHorizontal_bias="0.45"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/pegsLeft"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:text="@string/pegs_left"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/gridLayout"
-        app:layout_constraintHorizontal_bias="0.447"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/undoPeg"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/pegsCounter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/_32"
-        app:layout_constraintEnd_toStartOf="@+id/gridLayout"
-        app:layout_constraintHorizontal_bias="0.454"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pegsLeft" />
+        <Button
+            android:id="@+id/undoPeg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/undo" />
+
+        <Button
+            android:id="@+id/resetPeg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/reset" />
+
+
+        <TextView
+            android:id="@+id/timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_marginTop="50dp"
+            android:text="@string/_00_00"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/pegsLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_marginTop="10dp"
+            android:text="@string/pegs_left" />
+
+        <TextView
+            android:id="@+id/pegsCounter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:text="@string/_32" />
+
+    </LinearLayout>
+
 
     <GridLayout
         android:id="@+id/gridLayout"
@@ -281,6 +283,7 @@
             android:layout_row="3"
             android:layout_column="3"
             android:contentDescription="@string/empty"
+            android:src="@drawable/empty"
             android:tag="33" />
 
         <ImageView

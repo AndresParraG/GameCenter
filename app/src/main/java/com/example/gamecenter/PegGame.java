@@ -207,27 +207,35 @@ public class PegGame implements Serializable {
 
     //arreglar en los lados
     public boolean gameOver() {
-        for (int i = 1; i < board.length - 1; i++) {
-            for (int j = 1; j < board[0].length - 1; j++) {
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
                 if (board[i][j] == PEG) {
-                    if (board[i + 1][j] == PEG) {
-                        if (board[i - 1][j] == EMPTY) {
-                            return false;
+                    if (i != 6 && i != 0) {
+                        if (board[i + 1][j] == PEG) {
+                            if (board[i - 1][j] == EMPTY) {
+                                return false;
+                            }
                         }
                     }
-                    if (board[i - 1][j] == PEG) {
-                        if (board[i + 1][j] == EMPTY) {
-                            return false;
+                    if (i != 6 && i != 0) {
+                        if (board[i - 1][j] == PEG) {
+                            if (board[i + 1][j] == EMPTY) {
+                                return false;
+                            }
                         }
                     }
-                    if (board[i][j + 1] == PEG) {
-                        if (board[i][j - 1] == EMPTY) {
-                            return false;
+                    if (j != 6 && j != 0) {
+                        if (board[i][j + 1] == PEG) {
+                            if (board[i][j - 1] == EMPTY) {
+                                return false;
+                            }
                         }
                     }
-                    if (board[i][j - 1] == PEG) {
-                        if (board[i][j + 1] == EMPTY) {
-                            return false;
+                    if (j != 6 && j != 0) {
+                        if (board[i][j - 1] == PEG) {
+                            if (board[i][j + 1] == EMPTY) {
+                                return false;
+                            }
                         }
                     }
                 }

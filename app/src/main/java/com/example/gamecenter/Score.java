@@ -30,12 +30,27 @@ public class Score extends AppCompatActivity {
 
         userS.setText(data[0]);
         score2048.setText(data[1]);
-        scorePeg.setText(data[2]);
+        if (Integer.parseInt(data[2]) != -10) {
+            scorePeg.setText(getTimerText(Integer.parseInt(data[2])));
+        } else {
+            scorePeg.setText(getTimerText(0));
+        }
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         this.finish();
+    }
+
+    private String getTimerText(int time) {
+        int seconds = ((time % 86400) % 3600) % 60;
+        int minutes = ((time % 86400) % 3600) / 60;
+
+        return formatTime(seconds, minutes);
+    }
+
+    private String formatTime(int seconds, int minutes) {
+        return String.format("%02d", minutes) + ":" + String.format("%02d", seconds);
     }
 }
