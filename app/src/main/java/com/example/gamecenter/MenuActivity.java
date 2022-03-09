@@ -53,8 +53,8 @@ public class MenuActivity extends AppCompatActivity {
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent score = new Intent(MenuActivity.this, Score.class);
-                score.putExtra("user", user);
+                Intent score = new Intent(MenuActivity.this, ScoreScreen.class);
+                //score.putExtra("user", user);
                 startActivity(score);
             }
         });

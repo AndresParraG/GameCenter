@@ -31,4 +31,14 @@
     <style name="clickable_peg" parent="peg_shape">
         <item name="android:onClick">onClick</item>
     </style>
+
+    <style name="toggle_on">
+        <item name="android:background">@color/purple_700</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="toggle_off">
+        <item name="android:background">@color/_0</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
 </resources>

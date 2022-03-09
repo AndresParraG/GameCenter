@@ -107,7 +107,7 @@ public class PegDisplay extends AppCompatActivity {
             System.out.println("ERROR ON DATABASE HIGHSCORE RETRIEVAL");
         } else if (hs > round) {
             db.updatePeg(user, round);
-        } else if (hs == -10) {
+        } else if (hs == 0) {
             db.updatePeg(user, round);
         }
     }

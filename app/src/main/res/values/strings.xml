@@ -29,4 +29,7 @@
     <string name="peg_hs">Peg HS:</string>
     <string name="reset">Reset</string>
     <string name="_00_00">00:00</string>
+    <string name="posici_n">Posición</string>
+    <string name="usuario">Usuario</string>
+    <string name="puntos">Puntos</string>
 </resources>

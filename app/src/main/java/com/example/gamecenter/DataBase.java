@@ -12,14 +12,14 @@ public class DataBase extends SQLiteOpenHelper {
 
     private static final String TAG = DataBase.class.getSimpleName();
     private static final int DATABASE_VERSION = 1;
-    private static final String SCORE_LIST_TABLE = "scores_entries";
+    public static final String SCORE_LIST_TABLE = "scores_entries";
     private static final String DATABASE_NAME = "scores";
 
-    private static final String KEY_ID = "_id";
-    private static final String USER = "user";
-    private static final String PASSWORD = "pass";
-    private static final String SCORE_2048 = "score_2048";
-    private static final String SCORE_PEG = "score_peg";
+    public static final String KEY_ID = "_id";
+    public static final String USER = "user";
+    public static final String PASSWORD = "pass";
+    public static final String SCORE_2048 = "score_2048";
+    public static final String SCORE_PEG = "score_peg";
 
     private static final String[] COLUMNS = {KEY_ID, USER, PASSWORD, SCORE_2048, SCORE_PEG};
 
@@ -58,7 +58,7 @@ public class DataBase extends SQLiteOpenHelper {
         values.put(USER, "admin");
         values.put(PASSWORD, "admin");
         values.put(SCORE_2048, 0);
-        values.put(SCORE_PEG, -10);
+        values.put(SCORE_PEG, 0);
         db.insert(SCORE_LIST_TABLE, null, values);
     }
 
@@ -76,7 +76,7 @@ public class DataBase extends SQLiteOpenHelper {
         values.put(USER, user);
         values.put(PASSWORD, pass);
         values.put(SCORE_2048, scores);
-        values.put(SCORE_PEG, -10);
+        values.put(SCORE_PEG, scores);
         try {
             if (mWriteableDB == null) {
                 mWriteableDB = getWritableDatabase();
@@ -88,6 +88,7 @@ public class DataBase extends SQLiteOpenHelper {
         return newId;
     }
 
+    //test method
     public String[] returnData(String user) {
         String data[] = new String[3];
         String query = "SELECT * FROM " + SCORE_LIST_TABLE + " WHERE " + USER + " = ?";

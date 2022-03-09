@@ -10,13 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GameCenter">
         <activity
+            android:name=".ScoreScreen"
+            android:exported="false" />
+        <activity
             android:name=".Signup"
             android:exported="false" />
         <activity
             android:name=".Login"
-            android:exported="false" />
-        <activity
-            android:name=".Score"
             android:exported="false" />
         <activity
             android:name=".BoxDisplay"
