@@ -4,7 +4,7 @@
     <string name="_2048_game">2048 Game</string>
     <string name="peg_solitaire">Peg Solitaire</string>
     <string name="_2048_game_and_peg_solitaire">2048 Game and Peg Solitaire</string>
-    <string name="pre_build_version">Pre-build version</string>
+    <string name="version">Version 1.0</string>
     <string name="null_value"> </string>
     <string name="start">Start</string>
     <string name="empty">empty</string>
@@ -18,12 +18,12 @@
     <string name="undo">Undo</string>
     <string name="score">Score</string>
     <string name="log_in">Log In</string>
-    <string name="enter_password">Enter password...</string>
-    <string name="enter_username">Enter username...</string>
+    <string name="enter_password">Enter password…</string>
+    <string name="enter_username">Enter username…</string>
     <string name="login_screen">Login Screen</string>
     <string name="or_sign_up_instead">- or Sign Up instead -</string>
     <string name="sign_up">Sign Up</string>
-    <string name="repeat_password">Repeat Password...</string>
+    <string name="repeat_password">Repeat Password…</string>
     <string name="user">User:</string>
     <string name="_2048_hs">2048 HS:</string>
     <string name="peg_hs">Peg HS:</string>

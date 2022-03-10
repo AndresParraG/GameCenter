@@ -63,7 +63,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/pre_build_version"
+        android:text="@string/version"
         android:layout_gravity="center_vertical|center_horizontal"
         android:gravity="center"/>
 

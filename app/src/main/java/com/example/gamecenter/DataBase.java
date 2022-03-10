@@ -42,6 +42,7 @@ public class DataBase extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(SCORE_TABLE_CREATE);
         fillDataBaseWithData(sqLiteDatabase);
+        //fillDataBaseWithData2(sqLiteDatabase);
     }
 
     @Override
@@ -60,6 +61,17 @@ public class DataBase extends SQLiteOpenHelper {
         values.put(SCORE_2048, 0);
         values.put(SCORE_PEG, 0);
         db.insert(SCORE_LIST_TABLE, null, values);
+    }
+
+    private void fillDataBaseWithData2(SQLiteDatabase db) {
+        for (int i=0; i<15; i++){
+            ContentValues values = new ContentValues();
+            values.put(USER, "testUser"+i);
+            values.put(PASSWORD, "test");
+            values.put(SCORE_2048, i*15+1);
+            values.put(SCORE_PEG, i*5+1);
+            db.insert(SCORE_LIST_TABLE, null, values);
+        }
     }
 
     public long count() {
