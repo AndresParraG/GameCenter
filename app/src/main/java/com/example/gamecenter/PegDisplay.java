@@ -42,14 +42,15 @@ public class PegDisplay extends AppCompatActivity {
 
         if (savedInstanceState != null) {
             peg = (PegGame) savedInstanceState.getSerializable(BOARD);
+            time = savedInstanceState.getDouble("time");
         } else {
             peg = new PegGame();
+            time = 0.0;
         }
         pegsCounter = (TextView) findViewById(R.id.pegsCounter);
         timerText = (TextView) findViewById(R.id.timer);
         undoButton = findViewById(R.id.undoPeg);
         resetButton = findViewById(R.id.resetPeg);
-        time = 0.0;
         timer = new Timer();
         startTimer();
         update();
@@ -81,6 +82,7 @@ public class PegDisplay extends AppCompatActivity {
         super.onSaveInstanceState(savedInstanceState);
         Log.i(TAG, "onSaveInstanceState");
         savedInstanceState.putSerializable(BOARD, peg);
+        savedInstanceState.putDouble("time", time);
     }
 
     public void onClick(View view) {
@@ -92,8 +94,7 @@ public class PegDisplay extends AppCompatActivity {
             Toast.makeText(this, "WIN", Toast.LENGTH_SHORT).show();
             stopTimer();
             saveScore();
-        }
-        if (peg.isLose()) {
+        } else if (peg.isLose()) {
             Toast.makeText(this, "LOSE", Toast.LENGTH_SHORT).show();
             stopTimer();
         }

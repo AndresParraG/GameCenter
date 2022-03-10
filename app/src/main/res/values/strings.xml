@@ -32,4 +32,12 @@
     <string name="posici_n">Posición</string>
     <string name="usuario">Usuario</string>
     <string name="puntos">Puntos</string>
+    <string name="login">Login</string>
+    <string name="user_settings">User Settings</string>
+    <string name="swipe_the_board_match_equal_tiles_and_try_to_reach_2048">Swipe the board, match equal tiles and try to reach 2048</string>
+    <string name="eliminate_all_pegs_until_there_is_only_one_left_as_fast_as_possible">Eliminate all pegs until there is only one left as fast as possible</string>
+    <string name="play_peg_solitaire">play peg solitaire</string>
+    <string name="play_2048">play 2048</string>
+    <string name="play">Play</string>
+    <string name="log_out">Log Out</string>
 </resources>

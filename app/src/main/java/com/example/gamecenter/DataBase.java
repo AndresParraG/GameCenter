@@ -152,6 +152,20 @@ public class DataBase extends SQLiteOpenHelper {
         return found;
     }
 
+    public void updatePassword(String user, String newPass) {
+        try {
+            if(mWriteableDB == null) {
+                mWriteableDB = getWritableDatabase();
+            }
+            ContentValues values = new ContentValues();
+            values.put(PASSWORD, newPass);
+            mWriteableDB.update(SCORE_LIST_TABLE, values,
+                    USER + " = ?", new String[]{user});
+        } catch (Exception e) {
+            Log.d(TAG, "EXCEPTION! " + e.getMessage());
+        }
+    }
+
     public int returnHS2048(String user) {
         String query = "SELECT * FROM " + SCORE_LIST_TABLE + " WHERE " + USER + " = ?";
         Cursor cursor = null;

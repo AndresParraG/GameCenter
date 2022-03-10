@@ -40,6 +40,7 @@ public class Signup extends AppCompatActivity {
                 } else if (db.checkUser(usr)) {
                     Toast.makeText(Signup.this, "USER ALREADY EXISTS", Toast.LENGTH_SHORT).show();
                 } else if (pas.equals(rePass.getText().toString())) {
+                    Toast.makeText(Signup.this, "NEW USER CREATED", Toast.LENGTH_SHORT).show();
                     db.insert(usr, pas);
                     startActivity(new Intent(Signup.this, MenuActivity.class));
                     finish();

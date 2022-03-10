@@ -17,45 +17,48 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        /*
-        if (savedInstanceState != null) {
-            user = savedInstanceState.getString();
-        }
-        */
-
         Bundle extras = getIntent().getExtras();
         user = extras.getString("user");
 
-        Button button1 = (Button) findViewById(R.id.start2048);
-        Button button2 = (Button) findViewById(R.id.startPeg);
-        Button button3 = (Button) findViewById(R.id.startScore);
+        Button button1 = (Button) findViewById(R.id.startGameSelector);
+        Button button2 = (Button) findViewById(R.id.startScore);
+        Button button3 = (Button) findViewById(R.id.userSettings);
+        Button button4 = (Button) findViewById(R.id.logOut);
         TextView userName = (TextView) findViewById(R.id.userName);
         userName.setText(user);
 
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent boxGame = new Intent(MenuActivity.this, BoxDisplay.class);
-                boxGame.putExtra("user", user);
-                startActivity(boxGame);
+                Intent selector = new Intent(MenuActivity.this, GameSelector.class);
+                selector.putExtra("user", user);
+                startActivity(selector);
             }
         });
 
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent pegGame = new Intent(MenuActivity.this, PegDisplay.class);
-                pegGame.putExtra("user", user);
-                startActivity(pegGame);
+                Intent score = new Intent(MenuActivity.this, ScoreScreen.class);
+                startActivity(score);
             }
         });
 
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent score = new Intent(MenuActivity.this, ScoreScreen.class);
-                //score.putExtra("user", user);
-                startActivity(score);
+                Intent settings = new Intent(MenuActivity.this, UserSettings.class);
+                settings.putExtra("user", user);
+                startActivity(settings);
+            }
+        });
+
+        button4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent logOut = new Intent(MenuActivity.this, Login.class);
+                startActivity(logOut);
+                MenuActivity.this.finish();
             }
         });
     }

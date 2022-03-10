@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GameCenter">
         <activity
+            android:name=".UserSettings"
+            android:exported="false" />
+        <activity
+            android:name=".GameSelector"
+            android:exported="false" />
+        <activity
             android:name=".ScoreScreen"
             android:exported="false" />
         <activity

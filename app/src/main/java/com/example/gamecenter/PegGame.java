@@ -11,7 +11,7 @@ public class PegGame implements Serializable {
     private final static int PEG = 1;
     private final static int SELECTED_PEG = 2;
 
-    private int[][] board = new int[7][7]; //-1: outOfBounds, 0: no peg, 1: peg, 2: selected peg
+    private int[][] board = new int[7][7];
     private int[][] boardAnterior;
     private boolean selected;
     private boolean win;
@@ -87,7 +87,6 @@ public class PegGame implements Serializable {
         return matrizC;
     }
 
-    //arreglar contador de pegs
     public void undo() {
         if (!undoPressed) {
             board = copyMatriz(boardAnterior);
